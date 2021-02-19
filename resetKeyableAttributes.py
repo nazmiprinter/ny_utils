@@ -1,6 +1,6 @@
 from maya import cmds
 
-#Setting keyable attributes of selected nodes to theirdefault value.
+#Setting keyable attributes of selected nodes to their default value.
 #It's extremely handy to use it on "CTRL+SHIFT+R" shortcut
 
 seleks = cmds.ls(sl=True)
