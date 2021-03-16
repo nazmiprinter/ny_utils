@@ -1,6 +1,5 @@
 def inbetween_twist_joints(primaryAxis, name, number):
     """
-    Arguments are self explanatory.
     Use lowercase for axis: x+, z-
     Select parent and child joints, then run the script.
     """
@@ -16,7 +15,7 @@ def inbetween_twist_joints(primaryAxis, name, number):
     startJN = cmds.joint(n=name + "_start_JNT")
     cmds.matchTransform(startJN, first)
     cmds.makeIdentity(r=True, a=True)
-    cmds.select(cl=True)
+    cmds.select(startJN)
     endJN = cmds.joint(n=name + "_end_JNT")
     cmds.matchTransform(endJN, second)
     cmds.makeIdentity(r=True, a=True)
@@ -24,10 +23,10 @@ def inbetween_twist_joints(primaryAxis, name, number):
     cmds.select(startJN)
     for btw in range(int(number)):
         cmds.insertJoint()
-        insjt = cmds.rename(name + "_twist_{}_JNT".format(btw))
-        cmds.setAttr(insjt + ".t{}".format(primaryAxis[0]), div)
+        insjt = cmds.rename("{}_twist_{}_JNT".format(name, btw))
+        cmds.setAttr("{}.t{}".format(insjt, primaryAxis[0]), div)
     
-    cmds.parent(endJN, insjt)
+    cmds.setAttr("{}.t{}".format(endJN, primaryAxis[0]), div)
     
     #HANDLE AND TWIST
     ikHDL = cmds.ikHandle(sol="ikSplineSolver", ccv=True, scv=True, roc=True, n=name + "_twist_HDL", sj=startJN, ee=endJN)
@@ -38,7 +37,7 @@ def inbetween_twist_joints(primaryAxis, name, number):
         cmds.connectAttr(second + ".r{}".format(primaryAxis[0]), ikHDL[0] + ".twist")
     else:
         twistAbar = cmds.createNode("animBlendNodeAdditiveRotation", n=name + "_twist_ABAR")
-        cmds.connectAttr(second + ".r{}".format(primaryAxis[0]), twistAbar + ".inputAX")
+        cmds.connectAttr("{}.r{}".format(second, primaryAxis[0]), twistAbar + ".inputAX")
         cmds.setAttr(twistAbar + ".weightA", -1)
         cmds.connectAttr(twistAbar + ".outputX", ikHDL[0] + ".twist")
         
