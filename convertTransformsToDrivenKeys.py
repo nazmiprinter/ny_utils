@@ -1,9 +1,9 @@
 from maya import cmds
 
-def convert_to_driven():
+def convert_transforms_to_drivenkeys():
     """
     Select the nodes you want to convert,
-    then node with the attribute,
+    then node with the driver attribute,
     then select the attribute from the channelbox,
     and run the script.
     Driver attribute should be at it's maximum value.
