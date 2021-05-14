@@ -60,4 +60,4 @@ def convert_transforms_to_drivenkeys():
             if animvals[0] == animvals[1]:
                 cmds.delete(clnup)
 
-convert_to_driven()
+convert_transforms_to_drivenkeys()
